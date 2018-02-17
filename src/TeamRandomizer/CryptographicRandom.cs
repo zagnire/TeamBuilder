@@ -1,17 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TeamRandomizer
 {
+    /// <summary>
+    /// A cryptographic random based on <see cref="RNGCryptoServiceProvider"/>
+    /// </summary>
+    /// <seealso cref="TeamRandomizer.IRandom" />
     public class CryptographicRandom : IRandom
     {
-
         RNGCryptoServiceProvider _rng = new RNGCryptoServiceProvider();
 
+        /// <summary>
+        /// returns the next random value between <paramref name="minValue" /> and <paramref name="maxValue" />.
+        /// </summary>
+        /// <param name="minValue">The minimum value.</param>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns>
+        /// next random value
+        /// </returns>
         public int Next(int minValue, int maxValue)
         {
             uint scale = uint.MaxValue;
@@ -28,7 +35,6 @@ namespace TeamRandomizer
 
             // Add min to the scaled difference between max and min 
             return (int)(minValue + (maxValue - minValue) * scale / (double)uint.MaxValue);
-
         }
     }
 }
